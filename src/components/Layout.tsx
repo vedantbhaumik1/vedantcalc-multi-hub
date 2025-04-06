@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from './Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -16,16 +15,12 @@ import { LoanEMICalculator } from './calculators/LoanEMICalculator';
 import { DateCalculator } from './calculators/DateCalculator';
 import { TipCalculator } from './calculators/TipCalculator';
 import { Toaster } from "@/components/ui/sonner";
-
 const Layout: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-blue-50 to-white">
+  return <div className="min-h-screen bg-gradient-to-b from-blue-50 via-blue-50 to-white">
       <Navbar />
       <main className="container mx-auto py-10 px-4">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-calculator-result bg-clip-text text-transparent bg-gradient-to-r from-calculator-result to-calculator-primary">
-            MultiCalc Ultimate Hub
-          </h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-calculator-result bg-clip-text text-transparent bg-gradient-to-r from-calculator-result to-calculator-primary">VedantCalc multi Hub</h1>
           <p className="text-center text-gray-600 mb-8 max-w-xl mx-auto">
             Your all-in-one calculator suite for everyday calculations and conversions
           </p>
@@ -106,8 +101,6 @@ const Layout: React.FC = () => {
         </div>
       </main>
       <Toaster position="bottom-right" />
-    </div>
-  );
+    </div>;
 };
-
 export default Layout;
