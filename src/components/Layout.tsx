@@ -11,6 +11,7 @@ import { FinanceCalculator } from './calculators/FinanceCalculator';
 import { ExerciseCalculator } from './calculators/ExerciseCalculator';
 import { MortgageCalculator } from './calculators/MortgageCalculator';
 import { CurrencyConverter } from './calculators/CurrencyConverter';
+import { Toaster } from "@/components/ui/sonner";
 
 const Layout: React.FC = () => {
   return (
@@ -74,6 +75,7 @@ const Layout: React.FC = () => {
           </Tabs>
         </div>
       </main>
+      <Toaster position="bottom-right" />
     </div>
   );
 };
