@@ -1,17 +1,14 @@
-
 import React from 'react';
 import { Calculator, Menu } from 'lucide-react';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger, NavigationMenuContent } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-
 const Navbar: React.FC = () => {
-  return (
-    <nav className="bg-calculator-primary shadow-md">
+  return <nav className="bg-calculator-primary shadow-md">
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <Calculator className="h-6 w-6 text-white" />
-            <span className="text-white font-bold text-xl">MultiCalc</span>
+            <span className="text-white font-bold text-xl">VedantCalc</span>
           </div>
           
           <div className="hidden md:block">
@@ -94,34 +91,26 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </div>
-    </nav>
-  );
+    </nav>;
 };
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a"> & { title: string }
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
+const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a"> & {
+  title: string;
+}>(({
+  className,
+  title,
+  children,
+  ...props
+}, ref) => {
+  return <li>
       <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
+        <a ref={ref} className={cn("block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground", className)} {...props}>
           <div className="text-sm font-medium leading-none">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
         </a>
       </NavigationMenuLink>
-    </li>
-  );
+    </li>;
 });
 ListItem.displayName = "ListItem";
-
 export default Navbar;
