@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
+import { ArrowDownUp } from 'lucide-react';
 
 type ConversionCategory = {
   name: string;
@@ -136,6 +137,15 @@ export const UnitConverter: React.FC = () => {
     const cat = conversionCategories.find(c => c.name === categoryName)!;
     setCategory(cat);
   };
+  
+  const swapUnits = () => {
+    const tempUnit = fromUnit;
+    setFromUnit(toUnit);
+    setToUnit(tempUnit);
+    
+    // Immediately convert with the new units
+    convert(fromValue, toUnit, tempUnit);
+  };
 
   return (
     <div>
@@ -147,7 +157,7 @@ export const UnitConverter: React.FC = () => {
           value={category.name}
           onValueChange={handleCategoryChange}
         >
-          <SelectTrigger className="w-full">
+          <SelectTrigger className="w-full bg-white shadow-sm border-gray-200 hover:border-calculator-primary/50 transition-colors">
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
@@ -160,27 +170,27 @@ export const UnitConverter: React.FC = () => {
         </Select>
       </div>
       
-      <div className="grid md:grid-cols-2 gap-8">
-        <Card className="p-6">
+      <div className="grid md:grid-cols-2 gap-8 relative">
+        <Card className="p-6 shadow-md bg-gradient-to-br from-white to-gray-50 border-gray-200 hover:shadow-lg transition-shadow">
           <div className="space-y-4">
             <div>
-              <Label htmlFor="fromValue" className="mb-1 block">From</Label>
+              <Label htmlFor="fromValue" className="mb-1 block text-calculator-result">From</Label>
               <Input
                 id="fromValue"
                 type="number"
                 value={fromValue}
                 onChange={handleFromValueChange}
-                className="mb-2"
+                className="mb-2 border-gray-200 shadow-sm focus:border-calculator-primary focus:ring-calculator-primary/30"
               />
             </div>
             
             <div>
-              <Label htmlFor="fromUnit" className="mb-1 block">Unit</Label>
+              <Label htmlFor="fromUnit" className="mb-1 block text-calculator-result">Unit</Label>
               <Select
                 value={fromUnit.id}
                 onValueChange={handleFromUnitChange}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full bg-white">
                   <SelectValue placeholder="Select unit" />
                 </SelectTrigger>
                 <SelectContent>
@@ -195,26 +205,35 @@ export const UnitConverter: React.FC = () => {
           </div>
         </Card>
         
-        <Card className="p-6">
+        <div className="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+          <button 
+            onClick={swapUnits}
+            className="p-3 rounded-full bg-calculator-primary text-white shadow-lg hover:bg-calculator-primary/90 transition-colors transform hover:scale-110 active:scale-95"
+          >
+            <ArrowDownUp className="h-5 w-5" />
+          </button>
+        </div>
+        
+        <Card className="p-6 shadow-md bg-gradient-to-br from-calculator-primary/5 to-calculator-primary/10 border-calculator-primary/20 hover:shadow-lg transition-shadow">
           <div className="space-y-4">
             <div>
-              <Label htmlFor="toValue" className="mb-1 block">To</Label>
+              <Label htmlFor="toValue" className="mb-1 block text-calculator-result">To</Label>
               <Input
                 id="toValue"
                 type="text"
                 value={toValue}
                 readOnly
-                className="mb-2 bg-gray-50"
+                className="mb-2 bg-white border-calculator-primary/20 font-medium text-calculator-result"
               />
             </div>
             
             <div>
-              <Label htmlFor="toUnit" className="mb-1 block">Unit</Label>
+              <Label htmlFor="toUnit" className="mb-1 block text-calculator-result">Unit</Label>
               <Select
                 value={toUnit.id}
                 onValueChange={handleToUnitChange}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full bg-white">
                   <SelectValue placeholder="Select unit" />
                 </SelectTrigger>
                 <SelectContent>
@@ -228,10 +247,19 @@ export const UnitConverter: React.FC = () => {
             </div>
           </div>
         </Card>
+        
+        <div className="md:hidden flex justify-center my-2">
+          <button 
+            onClick={swapUnits}
+            className="p-3 rounded-full bg-calculator-primary text-white shadow-lg"
+          >
+            <ArrowDownUp className="h-5 w-5" />
+          </button>
+        </div>
       </div>
       
-      <div className="mt-8 text-sm text-gray-500">
-        <p>Tip: You can enter a value and select different units to convert between them.</p>
+      <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-100 text-sm text-blue-700">
+        <p>Tip: You can quickly swap units using the exchange button, or type a value to see instant conversion results.</p>
       </div>
     </div>
   );

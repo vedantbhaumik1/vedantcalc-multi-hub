@@ -12,6 +12,7 @@ export const StandardCalculator: React.FC = () => {
   const [operation, setOperation] = useState<string | null>(null);
   const [resetDisplay, setResetDisplay] = useState(false);
   const [currentCalculation, setCurrentCalculation] = useState<string>('');
+  const [liveResult, setLiveResult] = useState<string>('');
   const [history, setHistory] = useState<CalculationEntry[]>([]);
   const [showHistory, setShowHistory] = useState(false);
   const { toast } = useToast();
@@ -24,6 +25,25 @@ export const StandardCalculator: React.FC = () => {
       setCurrentCalculation('');
     }
   }, [previousValue, operation]);
+
+  // Calculate live results as user types
+  useEffect(() => {
+    if (previousValue !== null && operation && display !== '0') {
+      try {
+        const current = parseFloat(display);
+        const result = calculate(previousValue, current, operation);
+        if (!isNaN(result) && isFinite(result)) {
+          setLiveResult(`= ${result}`);
+        } else {
+          setLiveResult('');
+        }
+      } catch (error) {
+        setLiveResult('');
+      }
+    } else {
+      setLiveResult('');
+    }
+  }, [display, previousValue, operation]);
 
   const handleNumberClick = (num: string) => {
     if (display === '0' || resetDisplay) {
@@ -64,7 +84,7 @@ export const StandardCalculator: React.FC = () => {
       const current = parseFloat(display);
       const result = calculate(previousValue, current, operation);
       
-      if (isNaN(result)) {
+      if (isNaN(result) || !isFinite(result)) {
         toast({
           title: "Math Error",
           description: "Cannot divide by zero",
@@ -92,6 +112,7 @@ export const StandardCalculator: React.FC = () => {
       setOperation(null);
       setResetDisplay(true);
       setCurrentCalculation('');
+      setLiveResult('');
     }
   };
 
@@ -101,6 +122,7 @@ export const StandardCalculator: React.FC = () => {
     setOperation(null);
     setResetDisplay(false);
     setCurrentCalculation('');
+    setLiveResult('');
   };
 
   const handleDecimal = () => {
@@ -133,7 +155,7 @@ export const StandardCalculator: React.FC = () => {
     }
   };
 
-  const buttonClass = "h-14 text-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-calculator-primary";
+  const buttonClass = "h-14 text-lg font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-calculator-primary transform hover:scale-105 active:scale-95";
   
   return (
     <div>
@@ -143,7 +165,7 @@ export const StandardCalculator: React.FC = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="ml-auto"
+          className="ml-auto bg-calculator-primary/10 hover:bg-calculator-primary/20"
           onClick={() => setShowHistory(!showHistory)}
         >
           <History className="h-5 w-5" />
@@ -153,7 +175,7 @@ export const StandardCalculator: React.FC = () => {
       
       <div className="grid md:grid-cols-3 gap-4">
         <div className={`md:col-span-${showHistory ? '2' : '3'}`}>
-          <div className="bg-gradient-to-r from-calculator-primary/10 to-calculator-primary/5 rounded-lg overflow-hidden shadow-lg mb-4 transition-all duration-300 hover:shadow-xl">
+          <div className="bg-gradient-to-r from-calculator-primary/20 to-calculator-primary/10 rounded-lg overflow-hidden shadow-lg mb-4 transition-all duration-300 hover:shadow-xl">
             <div className="bg-white p-4 text-right">
               <div className="text-gray-500 text-sm h-6 overflow-x-auto">
                 {currentCalculation}
@@ -161,34 +183,37 @@ export const StandardCalculator: React.FC = () => {
               <div className="text-3xl font-semibold text-calculator-result overflow-x-auto transition-all duration-300">
                 {display}
               </div>
+              <div className="text-lg text-calculator-primary font-medium h-6 overflow-x-auto animate-fade-in">
+                {liveResult}
+              </div>
             </div>
           </div>
           
           <div className="grid grid-cols-4 gap-2">
             <Button 
               variant="outline" 
-              className={cn(buttonClass, "bg-gray-200 hover:bg-gray-300 transform active:scale-95 transition-transform")}
+              className={cn(buttonClass, "bg-gray-200 hover:bg-gray-300 shadow-sm")}
               onClick={handleClear}
             >
               C
             </Button>
             <Button 
               variant="outline" 
-              className={cn(buttonClass, "bg-gray-200 hover:bg-gray-300 transform active:scale-95 transition-transform")}
+              className={cn(buttonClass, "bg-gray-200 hover:bg-gray-300 shadow-sm")}
               onClick={handleBackspace}
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <Button 
               variant="outline" 
-              className={cn(buttonClass, "bg-calculator-operation text-white hover:bg-calculator-operation/90 transform active:scale-95 transition-transform")}
+              className={cn(buttonClass, "bg-calculator-operation text-white hover:bg-calculator-operation/90 shadow-md")}
               onClick={() => handleOperationClick('÷')}
             >
               ÷
             </Button>
             <Button 
               variant="outline" 
-              className={cn(buttonClass, "bg-calculator-operation text-white hover:bg-calculator-operation/90 transform active:scale-95 transition-transform")}
+              className={cn(buttonClass, "bg-calculator-operation text-white hover:bg-calculator-operation/90 shadow-md")}
               onClick={() => handleOperationClick('×')}
             >
               ×
@@ -198,7 +223,7 @@ export const StandardCalculator: React.FC = () => {
               <Button 
                 key={num} 
                 variant="outline" 
-                className={cn(buttonClass, "transform active:scale-95 transition-transform")}
+                className={cn(buttonClass, "bg-white shadow-sm")}
                 onClick={() => handleNumberClick(num.toString())}
               >
                 {num}
@@ -207,7 +232,7 @@ export const StandardCalculator: React.FC = () => {
             
             <Button 
               variant="outline" 
-              className={cn(buttonClass, "bg-calculator-operation text-white hover:bg-calculator-operation/90 transform active:scale-95 transition-transform")}
+              className={cn(buttonClass, "bg-calculator-operation text-white hover:bg-calculator-operation/90 shadow-md")}
               onClick={() => handleOperationClick('-')}
             >
               -
@@ -217,7 +242,7 @@ export const StandardCalculator: React.FC = () => {
               <Button 
                 key={num} 
                 variant="outline" 
-                className={cn(buttonClass, "transform active:scale-95 transition-transform")}
+                className={cn(buttonClass, "bg-white shadow-sm")}
                 onClick={() => handleNumberClick(num.toString())}
               >
                 {num}
@@ -226,7 +251,7 @@ export const StandardCalculator: React.FC = () => {
             
             <Button 
               variant="outline" 
-              className={cn(buttonClass, "bg-calculator-operation text-white hover:bg-calculator-operation/90 transform active:scale-95 transition-transform")}
+              className={cn(buttonClass, "bg-calculator-operation text-white hover:bg-calculator-operation/90 shadow-md")}
               onClick={() => handleOperationClick('+')}
             >
               +
@@ -236,7 +261,7 @@ export const StandardCalculator: React.FC = () => {
               <Button 
                 key={num} 
                 variant="outline" 
-                className={cn(buttonClass, "transform active:scale-95 transition-transform")}
+                className={cn(buttonClass, "bg-white shadow-sm")}
                 onClick={() => handleNumberClick(num.toString())}
               >
                 {num}
@@ -245,7 +270,7 @@ export const StandardCalculator: React.FC = () => {
             
             <Button 
               variant="outline" 
-              className={cn(buttonClass, "bg-calculator-primary text-white hover:bg-calculator-primary/90 row-span-2 transform active:scale-95 transition-transform")}
+              className={cn(buttonClass, "bg-gradient-to-r from-calculator-primary to-calculator-primary/80 text-white hover:from-calculator-primary/90 hover:to-calculator-primary/70 row-span-2 shadow-lg")}
               onClick={handleEquals}
             >
               =
@@ -253,7 +278,7 @@ export const StandardCalculator: React.FC = () => {
             
             <Button 
               variant="outline" 
-              className={cn(buttonClass, "col-span-2 transform active:scale-95 transition-transform")}
+              className={cn(buttonClass, "col-span-2 bg-white shadow-sm")}
               onClick={() => handleNumberClick('0')}
             >
               0
@@ -261,7 +286,7 @@ export const StandardCalculator: React.FC = () => {
             
             <Button 
               variant="outline" 
-              className={cn(buttonClass, "transform active:scale-95 transition-transform")}
+              className={cn(buttonClass, "bg-white shadow-sm")}
               onClick={handleDecimal}
             >
               .
