@@ -7,6 +7,10 @@ import { ScientificCalculator } from './calculators/ScientificCalculator';
 import { BMICalculator } from './calculators/BMICalculator';
 import { UnitConverter } from './calculators/UnitConverter';
 import { PercentageCalculator } from './calculators/PercentageCalculator';
+import { FinanceCalculator } from './calculators/FinanceCalculator';
+import { ExerciseCalculator } from './calculators/ExerciseCalculator';
+import { MortgageCalculator } from './calculators/MortgageCalculator';
+import { CurrencyConverter } from './calculators/CurrencyConverter';
 
 const Layout: React.FC = () => {
   return (
@@ -18,12 +22,16 @@ const Layout: React.FC = () => {
         </h1>
         <div className="max-w-4xl mx-auto">
           <Tabs defaultValue="standard" className="w-full">
-            <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-8">
+            <TabsList className="grid grid-cols-3 lg:grid-cols-5 mb-8">
               <TabsTrigger value="standard">Standard</TabsTrigger>
               <TabsTrigger value="scientific">Scientific</TabsTrigger>
               <TabsTrigger value="bmi">BMI</TabsTrigger>
               <TabsTrigger value="converter">Converter</TabsTrigger>
               <TabsTrigger value="percentage">Percentage</TabsTrigger>
+              <TabsTrigger value="finance">Finance</TabsTrigger>
+              <TabsTrigger value="exercise">Exercise</TabsTrigger>
+              <TabsTrigger value="mortgage">Mortgage</TabsTrigger>
+              <TabsTrigger value="currency">Currency</TabsTrigger>
             </TabsList>
             
             <div className="bg-white rounded-lg shadow-lg p-6">
@@ -45,6 +53,22 @@ const Layout: React.FC = () => {
               
               <TabsContent value="percentage">
                 <PercentageCalculator />
+              </TabsContent>
+              
+              <TabsContent value="finance">
+                <FinanceCalculator />
+              </TabsContent>
+              
+              <TabsContent value="exercise">
+                <ExerciseCalculator />
+              </TabsContent>
+              
+              <TabsContent value="mortgage">
+                <MortgageCalculator />
+              </TabsContent>
+              
+              <TabsContent value="currency">
+                <CurrencyConverter />
               </TabsContent>
             </div>
           </Tabs>
