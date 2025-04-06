@@ -32,6 +32,9 @@ const Navbar: React.FC = () => {
                       <ListItem href="#percentage" title="Percentage Calculator">
                         Calculate percentages, discounts, and markups
                       </ListItem>
+                      <ListItem href="#vedic" title="Vedic Mathematics">
+                        Fast calculation methods based on Vedic techniques
+                      </ListItem>
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -48,6 +51,9 @@ const Navbar: React.FC = () => {
                       <ListItem href="#currency" title="Currency Converter">
                         Convert between world currencies with live rates
                       </ListItem>
+                      <ListItem href="#date" title="Date Calculator">
+                        Calculate date differences and future/past dates
+                      </ListItem>
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -63,6 +69,12 @@ const Navbar: React.FC = () => {
                       </ListItem>
                       <ListItem href="#mortgage" title="Mortgage Calculator">
                         Estimate mortgage payments and analyze loan details
+                      </ListItem>
+                      <ListItem href="#loan" title="Loan EMI Calculator">
+                        Calculate equated monthly installments for loans
+                      </ListItem>
+                      <ListItem href="#tip" title="Tip Calculator">
+                        Calculate tips and split bills among groups
                       </ListItem>
                       <ListItem href="#bmi" title="BMI Calculator">
                         Calculate Body Mass Index for health assessment

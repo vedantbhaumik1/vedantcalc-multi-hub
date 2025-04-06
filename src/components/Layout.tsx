@@ -11,6 +11,10 @@ import { FinanceCalculator } from './calculators/FinanceCalculator';
 import { ExerciseCalculator } from './calculators/ExerciseCalculator';
 import { MortgageCalculator } from './calculators/MortgageCalculator';
 import { CurrencyConverter } from './calculators/CurrencyConverter';
+import { VedicCalculator } from './calculators/VedicCalculator';
+import { LoanEMICalculator } from './calculators/LoanEMICalculator';
+import { DateCalculator } from './calculators/DateCalculator';
+import { TipCalculator } from './calculators/TipCalculator';
 import { Toaster } from "@/components/ui/sonner";
 
 const Layout: React.FC = () => {
@@ -27,17 +31,21 @@ const Layout: React.FC = () => {
           </p>
           
           <Tabs defaultValue="standard" className="w-full">
-            <div className="mb-8 bg-white p-2 rounded-lg shadow-md">
-              <TabsList className="grid grid-cols-3 lg:grid-cols-5 w-full">
+            <div className="mb-8 bg-white p-2 rounded-lg shadow-md overflow-x-auto">
+              <TabsList className="inline-flex min-w-full md:grid md:grid-cols-5 lg:grid-cols-7 w-full">
                 <TabsTrigger value="standard" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Standard</TabsTrigger>
                 <TabsTrigger value="scientific" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Scientific</TabsTrigger>
                 <TabsTrigger value="bmi" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">BMI</TabsTrigger>
-                <TabsTrigger value="converter" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Converter</TabsTrigger>
+                <TabsTrigger value="converter" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Units</TabsTrigger>
                 <TabsTrigger value="percentage" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Percentage</TabsTrigger>
                 <TabsTrigger value="finance" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Finance</TabsTrigger>
                 <TabsTrigger value="exercise" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Exercise</TabsTrigger>
                 <TabsTrigger value="mortgage" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Mortgage</TabsTrigger>
                 <TabsTrigger value="currency" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Currency</TabsTrigger>
+                <TabsTrigger value="vedic" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Vedic</TabsTrigger>
+                <TabsTrigger value="loan" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Loan EMI</TabsTrigger>
+                <TabsTrigger value="date" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Date</TabsTrigger>
+                <TabsTrigger value="tip" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-calculator-primary/80 data-[state=active]:to-calculator-primary data-[state=active]:text-white transition-all">Tip</TabsTrigger>
               </TabsList>
             </div>
             
@@ -76,6 +84,22 @@ const Layout: React.FC = () => {
               
               <TabsContent value="currency" className="animate-fade-in">
                 <CurrencyConverter />
+              </TabsContent>
+              
+              <TabsContent value="vedic" className="animate-fade-in">
+                <VedicCalculator />
+              </TabsContent>
+              
+              <TabsContent value="loan" className="animate-fade-in">
+                <LoanEMICalculator />
+              </TabsContent>
+              
+              <TabsContent value="date" className="animate-fade-in">
+                <DateCalculator />
+              </TabsContent>
+              
+              <TabsContent value="tip" className="animate-fade-in">
+                <TipCalculator />
               </TabsContent>
             </div>
           </Tabs>
