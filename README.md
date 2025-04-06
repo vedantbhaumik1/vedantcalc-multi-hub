@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/fd6a84de-ca5f-49c2-a1b7-a5cada5ff039
+**URL**: https://multicalc-ultimate-hub.lovable.app/
 
 ## How can I edit this code?
 
